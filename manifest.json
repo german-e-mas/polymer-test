@@ -1,0 +1,7 @@
+{
+  "name": "polymer-user-list",
+  "short_name": "polymer-user-list",
+  "description": "List the Users",
+  "start_url": "/",
+  "display": "standalone"
+}
