@@ -1,5 +1,4 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/src/user-element/user-element.html">
 
 <dom-module id="polymer-user-list-app">
@@ -9,30 +8,15 @@
         display: block;
       }
     </style>
-
-    <iron-ajax
-      auto = true
-      url = "http://localhost:3000/api/users/"
-      handle-as = "json"
-      last-response = "{{ajaxResponse}}"></iron-ajax>
-
     <h2>Hello [[prop1]]</h2>
 
-    <h3>List of hardcoded users</h3>
+    <h3>List of users</h3>
+
     <template is="dom-repeat" items="{{userList}}">
       <user-element user={{item.name}} id={{item.id}} ></user-element>
     </template>
 
-    <h3>Number of hardcoded users: [[quantity]]</h3>
-
-    <hr>
-
-    <h3>List of users from our Node Server</h3>
-    <template is="dom-repeat" items="{{ajaxResponse}}">
-      <user-element user={{item.name}} id={{item._id}} ></user-element>
-    </template>
-
-    <h3>Current number of users in the Node Server: [[ajaxResponse.length]]</h3>
+    <h3>Current number of users: [[quantity]]</h3>
 
   </template>
 
