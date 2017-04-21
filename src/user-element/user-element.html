@@ -1,0 +1,38 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="user-element">
+  <template>
+    <style>
+      div {
+        border: 1px solid black;
+        padding: 5px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+    </style>
+
+    <div>
+      <li>Name: [[user]]</li>
+      <li>ID: [[id]]</li>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'user-element',
+
+      properties: {
+        user: {
+          type: String,
+          value: 'user-element',
+        },
+        id: {
+          type: String,
+          value: '0',
+        }
+      }
+    });
+  </script>
+</dom-module>
