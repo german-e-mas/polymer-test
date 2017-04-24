@@ -18,13 +18,6 @@
 
     <h2>Hello [[prop1]]</h2>
 
-    <h3>List of hardcoded users</h3>
-    <template is="dom-repeat" items="{{userList}}">
-      <user-element user={{item.name}} id={{item.id}} ></user-element>
-    </template>
-
-    <h3>Number of hardcoded users: [[quantity]]</h3>
-
     <hr>
 
     <h3>List of users from our Node Server</h3>
@@ -46,23 +39,7 @@
           type: String,
           value: 'polymer-user-list-app',
         },
-        userList: {
-          type: Array,
-          value: [
-            {name: 'HNDK', id: '474'},
-            {name: 'Random User #2', id: '0110101'},
-            {name: 'Someone', id: 'Lost it.'}
-          ]
-        },
-        quantity: {
-          type: Number,
-          computed: 'getNumUsers(userList)',
-        },
       },
-      getNumUsers: function(userList) {
-        return userList.length
-      }
-
     });
   </script>
 </dom-module>
