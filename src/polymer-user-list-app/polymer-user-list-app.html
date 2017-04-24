@@ -17,10 +17,6 @@
       handle-as = "json"
       last-response = "{{ajaxResponse}}"></iron-ajax>
 
-    <h2>Hello [[prop1]]</h2>
-
-    <hr>
-
     <h3>List of users from our Node Server</h3>
     <template is="dom-repeat" items="{{ajaxResponse}}">
       <user-element user={{item.name}} id={{item._id}} ></user-element>
