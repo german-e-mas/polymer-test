@@ -1,0 +1,45 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="user-input">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <iron-ajax
+      id = "ajaxReq"
+      url = "http://localhost:3000/api/users/"
+      content-type = "application/json"
+      headers = '{"X-Requested-With": "XMLHttpRequest"}'
+      method = "POST"
+      handle-as = "json"
+      body = '{"name": "{{newUser}}"}'
+    ></iron-ajax>
+
+    <div>
+      <input id="nameIn" type="text" value="{{newUser::input}}">
+      <button on-click="addUser">Submit</button>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'user-input',
+
+      properties: {
+        newUser: {
+          type: String,
+          value: '',
+        },
+      },
+      addUser: function() {
+        this.$.ajaxReq.generateRequest()
+      }
+    });
+  </script>
+</dom-module>

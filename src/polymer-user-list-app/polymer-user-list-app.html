@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/src/user-element/user-element.html">
+<link rel="import" href="/src/user-input/user-input.html">
 
 <dom-module id="polymer-user-list-app">
   <template>
@@ -26,6 +27,10 @@
     </template>
 
     <h3>Current number of users in the Node Server: [[ajaxResponse.length]]</h3>
+    <hr>
+
+    <h3>Add a new user</h3>
+    <user-input></user-input>
 
   </template>
 
