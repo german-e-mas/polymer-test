@@ -17,6 +17,7 @@
       method = "POST"
       handle-as = "json"
       body = '{"name": "{{newUser}}"}'
+      on-response = 'userSubmitted'
     ></iron-ajax>
 
     <div>
@@ -39,6 +40,9 @@
       },
       addUser: function() {
         this.$.ajaxReq.generateRequest()
+      },
+      userSubmitted: function() {
+        this.fire('user-submitted', 'event')
       }
     });
   </script>

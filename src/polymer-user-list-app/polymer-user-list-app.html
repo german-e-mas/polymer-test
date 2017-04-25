@@ -12,6 +12,7 @@
     </style>
 
     <iron-ajax
+      id = 'ajaxGet'
       auto = true
       url = "http://localhost:3000/api/users/"
       handle-as = "json"
@@ -41,6 +42,12 @@
           value: 'polymer-user-list-app',
         },
       },
+      listeners: {
+        'user-submitted': 'refreshList'
+      },
+      refreshList: function() {
+        this.$.ajaxGet.generateRequest()
+      }
     });
   </script>
 </dom-module>
