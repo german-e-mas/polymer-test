@@ -12,7 +12,7 @@
     </style>
 
     <iron-ajax
-      id = 'ajaxGet'
+      id = 'getUserList'
       auto = true
       url = "http://localhost:3000/api/users/"
       handle-as = "json"
@@ -46,7 +46,7 @@
         'user-submitted': 'refreshList'
       },
       refreshList: function() {
-        this.$.ajaxGet.generateRequest()
+        this.$.getUserList.generateRequest()
       }
     });
   </script>
