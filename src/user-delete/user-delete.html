@@ -1,0 +1,52 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+
+<dom-module id="user-delete">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <iron-meta id="meta"></iron-meta>
+
+    <iron-ajax
+      id = "deleteUser"
+      url = "[[deleteRoute]]/users/[[userId]]"
+      method = "DELETE"
+      on-response = 'userDeleted'
+    ></iron-ajax>
+
+    <button on-click="delete"> - </button>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'user-delete',
+
+      properties: {
+        userId: {
+          type: String,
+          value: '',
+        },
+        deleteRoute: {
+          type: String,
+          value: '',
+        },
+      },
+      delete: function() {
+        this.$.deleteUser.generateRequest()
+      },
+      userDeleted: function() {
+        this.fire('user-submitted', 'event')
+      },
+      ready: function() {
+        this.deleteRoute = this.$.meta.byKey('baseUrl');
+      }
+    });
+  </script>
+</dom-module>

@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="/src/user-delete/user-delete.html">
 
 <dom-module id="user-element">
   <template>
@@ -14,6 +15,7 @@
     <div>
       <li>Name: [[user]]</li>
       <li>ID: [[id]]</li>
+      <user-delete user-id="{{id}}"></user-delete>
     </div>
 
   </template>
