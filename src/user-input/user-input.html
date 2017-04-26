@@ -49,7 +49,7 @@
         this.$.submitUser.generateRequest()
       },
       userSubmitted: function() {
-        this.fire('user-submitted', 'event')
+        this.fire('users-modified', 'event')
       },
       ready: function() {
         this.submitRoute = this.$.meta.byKey('baseUrl');

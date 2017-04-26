@@ -42,7 +42,7 @@
         this.$.deleteUser.generateRequest()
       },
       userDeleted: function() {
-        this.fire('user-submitted', 'event')
+        this.fire('users-modified', 'event')
       },
       ready: function() {
         this.deleteRoute = this.$.meta.byKey('baseUrl');
