@@ -12,12 +12,12 @@
       }
     </style>
 
-    <iron-meta id="meta" key="baseUrl" value="http://localhost:3000/api/"></iron-meta>
+    <iron-meta id="meta" key="baseUrl" value="http://localhost:3000/api"></iron-meta>
 
     <iron-ajax
       id = 'getUserList'
       auto = true
-      url = "[[usersRoute]]users/"
+      url = "[[usersRoute]]/users/"
       handle-as = "json"
       last-response = "{{ajaxResponse}}"></iron-ajax>
 
