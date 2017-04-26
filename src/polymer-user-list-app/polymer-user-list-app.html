@@ -1,6 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
 <link rel="import" href="/src/user-element/user-element.html">
+<link rel="import" href="/src/user-input/user-input.html">
 
 <dom-module id="polymer-user-list-app">
   <template>
@@ -10,9 +12,12 @@
       }
     </style>
 
+    <iron-meta id="meta" key="baseUrl" value="http://localhost:3000/api"></iron-meta>
+
     <iron-ajax
+      id = 'getUserList'
       auto = true
-      url = "http://localhost:3000/api/users/"
+      url = "[[usersRoute]]/users"
       handle-as = "json"
       last-response = "{{ajaxResponse}}"></iron-ajax>
 
@@ -22,6 +27,10 @@
     </template>
 
     <h3>Current number of users in the Node Server: [[ajaxResponse.length]]</h3>
+    <hr>
+
+    <h3>Add a new user</h3>
+    <user-input></user-input>
 
   </template>
 
@@ -35,7 +44,20 @@
           type: String,
           value: 'polymer-user-list-app',
         },
+        usersRoute: {
+          type: String,
+          value: ''
+        },
       },
+      listeners: {
+        'user-submitted': 'refreshList'
+      },
+      refreshList: function() {
+        this.$.getUserList.generateRequest()
+      },
+      ready: function() {
+        this.usersRoute = this.$.meta.byKey('baseUrl');
+      }
     });
   </script>
 </dom-module>

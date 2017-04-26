@@ -1,0 +1,59 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+
+<dom-module id="user-input">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <iron-meta id="meta"></iron-meta>
+
+    <iron-ajax
+      id = "submitUser"
+      url = "[[submitRoute]]/users"
+      content-type = "application/json"
+      headers = '{"X-Requested-With": "XMLHttpRequest"}'
+      method = "POST"
+      handle-as = "json"
+      body = '{"name": "{{newUser}}"}'
+      on-response = 'userSubmitted'
+    ></iron-ajax>
+
+    <div>
+      <input id="nameIn" type="text" value="{{newUser::input}}">
+      <button on-click="addUser">Submit</button>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'user-input',
+
+      properties: {
+        newUser: {
+          type: String,
+          value: '',
+        },
+        submitRoute: {
+          type: String,
+          value: '',
+        },
+      },
+      addUser: function() {
+        this.$.submitUser.generateRequest()
+      },
+      userSubmitted: function() {
+        this.fire('user-submitted', 'event')
+      },
+      ready: function() {
+        this.submitRoute = this.$.meta.byKey('baseUrl');
+      }
+    });
+  </script>
+</dom-module>
