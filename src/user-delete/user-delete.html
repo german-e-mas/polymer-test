@@ -3,7 +3,7 @@
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
 <link rel="import" href="../../bower_components/paper-alert-dialog/paper-alert-dialog.html">
 
-<dom-module id="user-input">
+<dom-module id="user-delete">
   <template>
     <style>
       :host {
@@ -12,56 +12,49 @@
     </style>
 
     <paper-alert-dialog id="errorDialog" confirm-button="Ok">
-        There was an error while submitting a new user.
+        There was an error while removing the user.
     </paper-alert-dialog>
 
     <iron-meta id="meta"></iron-meta>
 
     <iron-ajax
-      id = "submitUser"
-      url = "[[submitRoute]]/users"
-      content-type = "application/json"
-      headers = '{"X-Requested-With": "XMLHttpRequest"}'
-      method = "POST"
-      handle-as = "json"
-      body = '{"name": "{{newUser}}"}'
-      on-response = 'userSubmitted'
-      on-error = 'submitError'
+      id = "deleteUser"
+      url = "[[deleteRoute]]/users/[[userId]]"
+      method = "DELETE"
+      on-response = 'userDeleted'
+      on-error = 'deleteError'
     ></iron-ajax>
 
-    <div>
-      <input id="nameIn" type="text" value="{{newUser::input}}">
-      <button on-click="addUser">Submit</button>
-    </div>
+    <button on-click="delete"> - </button>
 
   </template>
 
   <script>
     Polymer({
 
-      is: 'user-input',
+      is: 'user-delete',
 
       properties: {
-        newUser: {
+        userId: {
           type: String,
           value: '',
         },
-        submitRoute: {
+        deleteRoute: {
           type: String,
           value: '',
         },
       },
-      addUser: function() {
-        this.$.submitUser.generateRequest()
+      delete: function() {
+        this.$.deleteUser.generateRequest()
       },
-      userSubmitted: function() {
+      userDeleted: function() {
         this.fire('users-modified', 'event')
       },
-      submitError: function(event) {
+      deleteError: function(event) {
         this.$.errorDialog.open()
       },
       ready: function() {
-        this.submitRoute = this.$.meta.byKey('baseUrl');
+        this.deleteRoute = this.$.meta.byKey('baseUrl');
       }
     });
   </script>
