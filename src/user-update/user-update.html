@@ -1,0 +1,92 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-alert-dialog/paper-alert-dialog.html">
+
+<dom-module id="user-update">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+      iron-icon {
+        fill: rgba(0,0,0,0);
+        stroke: currentcolor;
+      }
+    </style>
+
+    <paper-alert-dialog id="errorDialog" confirm-button="Ok">
+        There was an error while updating the user.
+    </paper-alert-dialog>
+
+    <iron-icon src="ic_mode_edit_black_24px.svg" on-tap="showUpdateForm"></iron-icon>
+    <div id="updateForm" hidden="true">
+      <p><input id="nameUpdate" type="text" value="{{name::input}}"></p>
+      <p>
+        <button on-tap="update">Accept</button>
+        <button on-tap="cancel">Cancel</button>
+      </p>
+    </div>
+
+    <iron-meta id="meta"></iron-meta>
+
+    <iron-ajax
+      id = "updateUser"
+      url = "[[updateRoute]]/users/[[id]]"
+      method = "PUT"
+      content-type = "application/json"
+      headers = '{"X-Requested-With": "XMLHttpRequest"}'
+      handle-as = "json"
+      body = '{"name": "{{name}}"}'
+      on-response = 'userUpdated'
+      on-error = 'updateError'
+    ></iron-ajax>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'user-update',
+
+      properties: {
+        originalName: {
+          type: String,
+          value: '',
+        },
+        name: {
+          type: String,
+          value: '',
+        },
+        id: {
+          type: String,
+          value: '',
+        },
+      },
+      showUpdateForm: function() {
+        // Save the original name, so a cancel can restore it.
+        this.originalName = this.name
+        this.$.updateForm.hidden = !this.$.updateForm.hidden
+      },
+      update: function() {
+        this.$.updateUser.generateRequest()
+      },
+      cancel: function() {
+        // Upon cancel, restore the original name.
+        this.name = this.originalName
+        this.$.updateForm.hidden = true
+      },
+      userUpdated: function() {
+        this.$.updateForm.hidden = true
+        this.fire('users-modified', 'event')
+      },
+      updateError: function() {
+        this.$.errorDialog.open()
+      },
+      ready: function() {
+        this.updateRoute = this.$.meta.byKey('baseUrl');
+      }
+    });
+  </script>
+</dom-module>

@@ -2,12 +2,13 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
 <link rel="import" href="../../bower_components/paper-alert-dialog/paper-alert-dialog.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 
 <dom-module id="user-delete">
   <template>
     <style>
       :host {
-        display: block;
+        display: inline-block;
       }
     </style>
 
@@ -25,7 +26,7 @@
       on-error = 'deleteError'
     ></iron-ajax>
 
-    <button on-click="delete"> - </button>
+    <iron-icon src="ic_delete_black_24px.svg" on-click="delete"></iron-icon>
 
   </template>
 
