@@ -51,7 +51,7 @@
       is: 'user-update',
 
       properties: {
-        nameOriginal: {
+        originalName: {
           type: String,
           value: '',
         },
@@ -66,7 +66,7 @@
       },
       showUpdateForm: function() {
         // Save the original name, so a cancel can restore it.
-        this.nameOriginal = this.name
+        this.originalName = this.name
         this.$.updateForm.hidden = !this.$.updateForm.hidden
       },
       update: function() {
@@ -74,7 +74,7 @@
       },
       cancel: function() {
         // Upon cancel, restore the original name.
-        this.name = this.nameOriginal
+        this.name = this.originalName
         this.$.updateForm.hidden = true
       },
       userUpdated: function() {
