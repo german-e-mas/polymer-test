@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../../bower_components/paper-alert-dialog/paper-alert-dialog.html">
 
 <dom-module id="user-delete">
   <template>
@@ -10,6 +11,10 @@
       }
     </style>
 
+    <paper-alert-dialog id="errorDialog" confirm-button="Ok">
+        There was an error while removing the user.
+    </paper-alert-dialog>
+
     <iron-meta id="meta"></iron-meta>
 
     <iron-ajax
@@ -17,6 +22,7 @@
       url = "[[deleteRoute]]/users/[[userId]]"
       method = "DELETE"
       on-response = 'userDeleted'
+      on-error = 'deleteError'
     ></iron-ajax>
 
     <button on-click="delete"> - </button>
@@ -42,7 +48,13 @@
         this.$.deleteUser.generateRequest()
       },
       userDeleted: function() {
+        console.log("User deleted correctly.")
         this.fire('users-modified', 'event')
+      },
+      deleteError: function(event) {
+        console.log(event.detail.error.message);
+        console.log(event.detail.request.xhr.response);
+        this.$.errorDialog.open()
       },
       ready: function() {
         this.deleteRoute = this.$.meta.byKey('baseUrl');
