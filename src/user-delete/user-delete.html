@@ -48,12 +48,9 @@
         this.$.deleteUser.generateRequest()
       },
       userDeleted: function() {
-        console.log("User deleted correctly.")
         this.fire('users-modified', 'event')
       },
       deleteError: function(event) {
-        console.log(event.detail.error.message);
-        console.log(event.detail.request.xhr.response);
         this.$.errorDialog.open()
       },
       ready: function() {
