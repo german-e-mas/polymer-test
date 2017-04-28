@@ -1,24 +1,39 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="/src/user-delete/user-delete.html">
 <link rel="import" href="/src/user-update/user-update.html">
 
 <dom-module id="user-element">
   <template>
-    <style>
-      div {
-        border: 1px solid black;
-        padding: 5px;
-        margin-bottom: 10px;
-        box-sizing: border-box;
+    <style is="custom-style">
+      :host {
+        display: inline-block;
+      }
+      paper-card {
+        width: 25em;
+        --paper-card-background-color: white;
+        --paper-card-content: {
+          color: gray;
+          text-align: left;
+        };
+        --paper-card-actions: {
+          text-align: right;
+          background-color: #E0F2F1;
+        };
       }
     </style>
 
-    <div>
-      <li>Name: [[user]]</li>
-      <li>ID: [[id]]</li>
-      <user-delete user-id="{{id}}"></user-delete>
-      <user-update name="{{user}}" id="{{id}}"></user-update>
-    </div>
+    <paper-card heading="[[user]]">
+      <div class="card-content">
+        <p class="user-id">[[id]]</p>
+      </div>
+      <div class="card-actions">
+        <p>
+          <user-delete user-id="{{id}}"></user-delete>
+          <user-update name="{{user}}" id="{{id}}"></user-update>
+        </p>
+      </div>
+    </paper-card>
 
   </template>
 

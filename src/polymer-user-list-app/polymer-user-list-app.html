@@ -1,6 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="/src/user-element/user-element.html">
 <link rel="import" href="/src/user-input/user-input.html">
 
@@ -9,8 +11,22 @@
     <style>
       :host {
         display: block;
+        margin-bottom: 16px;
+      }
+      paper-toolbar {
+        background-color: #009688;
+      }
+      .user-item {
+        margin-top: 8px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
       }
     </style>
+
+    <paper-toolbar>
+      <div class="title">Polymer User List ([[ajaxResponse.length]])</div>
+    </paper-toolbar>
+
 
     <iron-meta id="meta" key="baseUrl" value="http://localhost:3000/api"></iron-meta>
 
@@ -21,17 +37,14 @@
       handle-as = "json"
       last-response = "{{ajaxResponse}}"></iron-ajax>
 
-    <h3>List of users from our Node Server</h3>
-    <template is="dom-repeat" items="{{ajaxResponse}}">
-      <user-element user={{item.name}} id={{item._id}} ></user-element>
-    </template>
-
-    <h3>Current number of users in the Node Server: [[ajaxResponse.length]]</h3>
-    <hr>
-
-    <h3>Add a new user</h3>
     <user-input></user-input>
-
+    
+    <template is="dom-repeat" items="{{ajaxResponse}}">
+      <div class="user-item">
+        <user-element user={{item.name}} id={{item._id}} ></user-element>
+      </div>
+    </template>
+    
   </template>
 
   <script>
