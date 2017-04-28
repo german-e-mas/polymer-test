@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="/src/user-element/user-element.html">
 <link rel="import" href="/src/user-input/user-input.html">
@@ -17,6 +18,8 @@
       }
       .user-item {
         margin-top: 8px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
       }
     </style>
 
