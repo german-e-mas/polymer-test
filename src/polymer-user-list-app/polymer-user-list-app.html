@@ -24,7 +24,7 @@
     </style>
 
     <paper-toolbar>
-      <div class="title">Polymer User List</div>
+      <div class="title">Polymer User List ([[ajaxResponse.length]])</div>
     </paper-toolbar>
 
 
@@ -44,8 +44,6 @@
         <user-element user={{item.name}} id={{item._id}} ></user-element>
       </div>
     </template>
-
-    <h3>Current number of users in the Node Server: [[ajaxResponse.length]]</h3>
     
   </template>
 
