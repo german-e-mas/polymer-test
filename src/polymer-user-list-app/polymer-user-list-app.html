@@ -14,6 +14,9 @@
       paper-toolbar {
         background-color: #009688;
       }
+      .user-item {
+        margin-top: 8px;
+      }
     </style>
 
     <paper-toolbar>
@@ -29,9 +32,10 @@
       handle-as = "json"
       last-response = "{{ajaxResponse}}"></iron-ajax>
 
-    <h3>List of users from our Node Server</h3>
     <template is="dom-repeat" items="{{ajaxResponse}}">
-      <user-element user={{item.name}} id={{item._id}} ></user-element>
+      <div class="user-item">
+        <user-element user={{item.name}} id={{item._id}} ></user-element>
+      </div>
     </template>
 
     <h3>Current number of users in the Node Server: [[ajaxResponse.length]]</h3>
