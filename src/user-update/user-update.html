@@ -25,11 +25,19 @@
     <paper-dialog id="updateForm" modal>
       <h2>Update User</h2>
       <p>
-        <paper-input always-float-label label="User Name" value="{{name::input}}"></paper-input>
+        <paper-input
+          id="inputLabel"
+          always-float-label
+          label="User Name"
+          required
+          value="{{name::input}}"
+          pattern=".{1,}"
+          error-message="Can't be empty."
+          ></paper-input>
       </p>
       <div class="buttons">
         <paper-button dialog-dismiss autofocus on-tap="cancel">Cancel</paper-button>
-        <paper-button dialog-confirm on-tap="update">Accept</paper-button>
+        <paper-button on-tap="update">Accept</paper-button>
       </div>
     </paper-dialog>
 
@@ -76,7 +84,11 @@
         this.$.updateForm.open()
       },
       update: function() {
-        this.$.updateUser.generateRequest()
+        this.$.inputLabel.validate();
+        if (!this.$.inputLabel.invalid) {
+          this.$.updateUser.generateRequest()
+          this.$.updateForm.close()
+        }
       },
       cancel: function() {
         // Upon cancel, restore the original name.
