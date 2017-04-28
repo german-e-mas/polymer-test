@@ -1,7 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
-<link rel="import" href="../../bower_components/paper-alert-dialog/paper-alert-dialog.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 <dom-module id="user-input">
   <template>
@@ -9,11 +13,40 @@
       :host {
         display: block;
       }
+      paper-fab {
+        position: fixed;
+        right: 25px;
+        bottom: 30px;
+        --paper-fab-background: #FF9800;
+      }
     </style>
 
-    <paper-alert-dialog id="errorDialog" confirm-button="Ok">
-        There was an error while submitting a new user.
-    </paper-alert-dialog>
+    <paper-dialog id="errorDialog" modal>
+      <p>There was an error while removing the user.</p>
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Ok</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="submitForm" modal>
+      <h2>New User</h2>
+      <p>
+        <paper-input
+          id="inputLabel"
+          always-float-label label="User Name"
+          required
+          value="{{newUser::input}}"
+          pattern=".{1,}"
+          error-message="Can't be empty."
+          ></paper-input>
+      </p>
+      <div class="buttons">
+        <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+        <paper-button on-tap="addUser">Accept</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-fab icon="add" on-tap="showSubmitForm"></paper-fab>
 
     <iron-meta id="meta"></iron-meta>
 
@@ -28,11 +61,6 @@
       on-response = 'userSubmitted'
       on-error = 'submitError'
     ></iron-ajax>
-
-    <div>
-      <input id="nameIn" type="text" value="{{newUser::input}}">
-      <button on-click="addUser">Submit</button>
-    </div>
 
   </template>
 
@@ -51,8 +79,16 @@
           value: '',
         },
       },
+      showSubmitForm: function() {
+        this.newUser = ""
+        this.$.submitForm.open()
+      },
       addUser: function() {
-        this.$.submitUser.generateRequest()
+        this.$.inputLabel.validate();
+        if (!this.$.inputLabel.invalid) {
+          this.$.submitUser.generateRequest()
+          this.$.submitForm.close()
+        }
       },
       userSubmitted: function() {
         this.fire('users-modified', 'event')

@@ -10,6 +10,7 @@
     <style>
       :host {
         display: block;
+        margin-bottom: 16px;
       }
       paper-toolbar {
         background-color: #009688;
@@ -23,6 +24,7 @@
       <div class="title">Polymer User List</div>
     </paper-toolbar>
 
+
     <iron-meta id="meta" key="baseUrl" value="http://localhost:3000/api"></iron-meta>
 
     <iron-ajax
@@ -32,6 +34,8 @@
       handle-as = "json"
       last-response = "{{ajaxResponse}}"></iron-ajax>
 
+    <user-input></user-input>
+    
     <template is="dom-repeat" items="{{ajaxResponse}}">
       <div class="user-item">
         <user-element user={{item.name}} id={{item._id}} ></user-element>
@@ -39,11 +43,7 @@
     </template>
 
     <h3>Current number of users in the Node Server: [[ajaxResponse.length]]</h3>
-    <hr>
-
-    <h3>Add a new user</h3>
-    <user-input></user-input>
-
+    
   </template>
 
   <script>
