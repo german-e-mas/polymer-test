@@ -4,12 +4,14 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 <dom-module id="user-update">
   <template>
     <style>
       :host {
         display: inline-block;
+        text-align: left;
       }
     </style>
 
@@ -20,15 +22,18 @@
         </div>
     </paper-dialog>
 
-    <paper-icon-button src="ic_mode_edit_black_24px.svg" on-tap="showUpdateForm"></paper-icon-button>
-
-    <div id="updateForm" hidden="true">
-      <p><input id="nameUpdate" type="text" value="{{name::input}}"></p>
+    <paper-dialog id="updateForm" modal>
+      <h2>Update User</h2>
       <p>
-        <button on-tap="update">Accept</button>
-        <button on-tap="cancel">Cancel</button>
+        <paper-input always-float-label label="User Name" value="{{name::input}}"></paper-input>
       </p>
-    </div>
+      <div class="buttons">
+        <paper-button dialog-dismiss autofocus on-tap="cancel">Cancel</paper-button>
+        <paper-button dialog-confirm on-tap="update">Accept</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-icon-button src="ic_mode_edit_black_24px.svg" on-tap="showUpdateForm"></paper-icon-button>
 
     <iron-meta id="meta"></iron-meta>
 
@@ -68,7 +73,7 @@
       showUpdateForm: function() {
         // Save the original name, so a cancel can restore it.
         this.originalName = this.name
-        this.$.updateForm.hidden = !this.$.updateForm.hidden
+        this.$.updateForm.open()
       },
       update: function() {
         this.$.updateUser.generateRequest()
@@ -76,10 +81,8 @@
       cancel: function() {
         // Upon cancel, restore the original name.
         this.name = this.originalName
-        this.$.updateForm.hidden = true
       },
       userUpdated: function() {
-        this.$.updateForm.hidden = true
         this.fire('users-modified', 'event')
       },
       updateError: function() {
